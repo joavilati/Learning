@@ -13,9 +13,37 @@ import java.util.ArrayList;
  */
 public class Formatador {
     
-    public String pontoEmVirgula(String p){
+    public String pontoEmVirgula(String pString){
+        String retorno = new String();
+        int tamanhoString = pString.length();
+        
+        for(int i=0 ;i<tamanhoString;i++){
+            if(pString.charAt(i)=='.'){
+                retorno+=',';
+            }else{
+                retorno +=pString.charAt(i);
+            }
+        }
        
-    return "";
+    return retorno;
+    }
+    
+    public String virgulaEmPonto (String pString){
+        String retorno = new String();
+        int tamanhoString = pString.length();
+        
+        for(int i=0 ;i<tamanhoString;i++){
+            if(pString.charAt(i)==','){
+                retorno+='.';
+            }else{
+                retorno +=pString.charAt(i);
+            }
+        }
+       
+    return retorno;
     }
     
 }
+    
+
+

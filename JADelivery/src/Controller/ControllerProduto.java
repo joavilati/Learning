@@ -7,6 +7,7 @@ package Controller;
 
 import Model.ModelProduto;
 import DAO.DAOProduto;
+import java.util.ArrayList;
 
 /**
  *
@@ -16,6 +17,20 @@ public class ControllerProduto {
     DAOProduto daoProduto = new DAOProduto();
     public int salvarProdutoController(ModelProduto pModelProduto) {
         return this.daoProduto.salvarProdutoDAO(pModelProduto);
+    }
+
+    public ArrayList<ModelProduto> retornarProdutoController() {
+        DAOProduto daoProdutos = new DAOProduto();
+        return this.daoProduto.retornarProdutosDAO();
+    }
+
+    public boolean excluirProdutoController(int codigo) {
+        
+        return this.daoProduto.excluirProdutosDAO(codigo);
+    }
+
+    public boolean alterarProdutoController(ModelProduto pModelProduto) {
+        return this.daoProduto.alterarProdutoDAO(pModelProduto);
     }
     
 }
