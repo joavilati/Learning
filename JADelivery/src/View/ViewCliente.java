@@ -347,46 +347,42 @@ public class ViewCliente extends javax.swing.JFrame {
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         // TODO add your handling code here:
-       try{ 
-            modelCliente.setCod(Integer.parseInt(txtCod.getText()));
-            modelCliente.setBairro(txtBairro.getText());
-            modelCliente.setCpfCnpj(txtCPFCNPJ.getText());
-            modelCliente.setCidade(txtCidade.getText());
-            modelCliente.setCod(Integer.parseInt(txtCod.getText()));
-            modelCliente.setComplemento(txtComplemento.getText());
-            modelCliente.setEmail(txtEmail.getText());
-            modelCliente.setEndereco(txtEndereco.getText());
-            modelCliente.setNome(txtNome.getText());
-            modelCliente.setNumero(txtNumero.getText());
-            modelCliente.setObs(txtObs.getText());
-            modelCliente.setTxe(new BigDecimal(txtTXE.getText()));//possivelmente de erro por conter virgula
-            modelCliente.setTelefone(txtTelefone.getText());
-            System.out.println("salvar : "+modelCliente.getTxe());
-            
-       }catch(Exception e){
-           System.err.println(e);
-            }
-        try{    
-            if(salvarAlterar.equals("salvar")){    
-                if(controllerCliente.salvarClienteController(modelCliente)>0){
+
+        
+        modelCliente.setBairro(txtBairro.getText());
+        modelCliente.setCpfCnpj(txtCPFCNPJ.getText());
+        modelCliente.setCidade(txtCidade.getText());
+        
+        modelCliente.setComplemento(txtComplemento.getText());
+        modelCliente.setEmail(txtEmail.getText());
+        modelCliente.setEndereco(txtEndereco.getText());
+        modelCliente.setNome(txtNome.getText());
+        modelCliente.setNumero(txtNumero.getText());
+        modelCliente.setObs(txtObs.getText());
+        modelCliente.setTxe(new BigDecimal(txtTXE.getText()));//possivelmente de erro por conter virgula
+        modelCliente.setTelefone(txtTelefone.getText());
+        System.out.println("salvar : " + modelCliente.getTxe());
+
+        if (salvarAlterar.equals("salvar")) {
+            if (controllerCliente.salvarClienteController(modelCliente) > 0) {
                 JOptionPane.showMessageDialog(this, "Cliente Salvo!");
                 carregarClientes();
                 limparCampos();
-            
-                }
-            }else{
-                if(controllerCliente.alterarClienteController(modelCliente)){
-                    JOptionPane.showMessageDialog(this, "Cliente Alterado!");
-                    carregarClientes();
-                    limparCampos();
-                
-                }else{
-                    JOptionPane.showMessageDialog(this,"Erro em atualiar","Erro",JOptionPane.WARNING_MESSAGE);
-                }
+                System.out.println("Entrou");
+
             }
-       }catch(Exception e){
-           System.err.println(e);
-       }
+        } else {
+            modelCliente.setCod(Integer.parseInt(txtCod.getText()));
+            if (controllerCliente.alterarClienteController(modelCliente)) {
+                JOptionPane.showMessageDialog(this, "Cliente Alterado!");
+                carregarClientes();
+                limparCampos();
+
+            } else {
+                JOptionPane.showMessageDialog(this, "Erro em atualiar", "Erro", JOptionPane.WARNING_MESSAGE);
+            }
+        }
+
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed

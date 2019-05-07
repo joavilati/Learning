@@ -19,6 +19,7 @@ public class DAOCliente extends ConexaoMySql{
         
         try{
             this.conectar();
+            System.out.println("DAOCliente : "+pModelCliente.getNome()+", "+pModelCliente.getTxe());
             return this.insertSQL("INSERT INTO tbl_cliente("
                     + "cli_telefone,"
                     + "cli_nome, "
