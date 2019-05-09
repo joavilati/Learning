@@ -96,4 +96,30 @@ public class DAOProduto extends ConexaoMySql{
             this.fecharConexao();
         }
     }
+
+    public ModelProduto getProdutoNomeDAO(String pNome) {
+        ModelProduto modelProduto = new ModelProduto(); 
+        try{
+            this.conectar();
+            this.executarSQL("SELECT pro_id, pro_nome, pro_valor_custo,"
+                    + " pro_valor_venda, pro_estoque FROM tbl_produto"
+                    + " WHERE pro_nome = '"+pNome+"'");
+            
+            while(this.getResultSet().next()){
+                modelProduto = new ModelProduto();
+                modelProduto.setId(this.getResultSet().getInt("pro_id"));
+                modelProduto.setNome(this.getResultSet().getString("pro_nome"));
+                modelProduto.setValorCusto(this.getResultSet().getBigDecimal("pro_valor_custo"));
+                modelProduto.setValorVenda(this.getResultSet().getBigDecimal("pro_valor_venda"));
+                modelProduto.setEstoque(this.getResultSet().getInt("pro_estoque"));
+        }
+            
+        }catch(Exception e){
+            System.err.println(e);
+        }finally{
+            this.fecharConexao();
+        }
+        return modelProduto;
+        
+    }
 }

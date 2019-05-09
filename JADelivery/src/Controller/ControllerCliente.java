@@ -15,6 +15,11 @@ import DAO.DAOCliente;
 public class ControllerCliente {
     DAOCliente daoCliente = new DAOCliente();
     
+    public ModelCliente getClienteTelefoneController(String pTelefone) {
+        return this.daoCliente.getClienteTelefoneDAO(pTelefone);
+    }
+    
+    
     public int salvarClienteController(ModelCliente modelCliente) {
         return this.daoCliente.salvarClienteDAO(modelCliente);
     }
@@ -34,5 +39,15 @@ public class ControllerCliente {
     public boolean excluirClienteController(int codigo) {
         return this.daoCliente.excluirClienteDAO(codigo);
     }
+
+    public ArrayList<ModelCliente> getListaClientController() {
+        return this.daoCliente.getListaClienteController();
+    }
+
+    public ModelCliente getClienteNomeController(String pNome) {
+        return this.daoCliente.getClienteNomeDAO(pNome);
+    }
+
+   
     
 }

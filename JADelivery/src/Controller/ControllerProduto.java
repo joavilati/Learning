@@ -32,5 +32,9 @@ public class ControllerProduto {
     public boolean alterarProdutoController(ModelProduto pModelProduto) {
         return this.daoProduto.alterarProdutoDAO(pModelProduto);
     }
+
+    public ModelProduto getPodrutoNomeController(String pNome) {
+        return this.daoProduto.getProdutoNomeDAO(pNome);
+    }
     
 }

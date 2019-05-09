@@ -18,8 +18,7 @@ public class DAOCliente extends ConexaoMySql{
      public int salvarClienteDAO(ModelCliente pModelCliente){
         
         try{
-            this.conectar();
-            System.out.println("DAOCliente : "+pModelCliente.getNome()+", "+pModelCliente.getTxe());
+            this.conectar();            
             return this.insertSQL("INSERT INTO tbl_cliente("
                     + "cli_telefone,"
                     + "cli_nome, "
@@ -112,19 +111,19 @@ public class DAOCliente extends ConexaoMySql{
     public boolean alterarClienteDAO(ModelCliente pModelCliente) {
         try{
             this.conectar();
-            return this.executarUpdateDeleteSQL("UPDATE tbl_produto SET"
-                    +" cli_telefone = '"+pModelCliente.getTelefone()+"', "
+            return this.executarUpdateDeleteSQL("UPDATE tbl_cliente SET"
+                    +" cli_telefone = '"+pModelCliente.getTelefone()+"',"
                     +" cli_nome = '"+pModelCliente.getNome()+"',"
                     +" cli_cpf_cnpj = '"+pModelCliente.getCpfCnpj()+"',"
-                    +" cli_email = '"+pModelCliente.getEmail()+"', "
+                    +" cli_email = '"+pModelCliente.getEmail()+"',"
                     +" cli_observacao = '"+pModelCliente.getObs()+"', "
-                    +" cli_endereco = '"+pModelCliente.getEndereco()+"', "
-                    +" cli_numero = '"+pModelCliente.getNumero()+"', "
-                    +" cli_complemento = '"+pModelCliente.getComplemento()+"', "
-                    +" cli_bairro = '"+pModelCliente.getBairro()+"', "
-                    +" cli_cidade = '"+pModelCliente.getCidade()+"', "
-                    +" cli_cep = '"+pModelCliente.getCep()+"', "
-                    +" cli_taxa_de_entrega = '"+pModelCliente.getTxe()
+                    +" cli_endereco = '"+pModelCliente.getEndereco()+"',"
+                    +" cli_numero = '"+pModelCliente.getNumero()+"',"
+                    +" cli_complemento = '"+pModelCliente.getComplemento()+"',"
+                    +" cli_bairro = '"+pModelCliente.getBairro()+"',"
+                    +" cli_cidade = '"+pModelCliente.getCidade()+"',"
+                    +" cli_cep = '"+pModelCliente.getCep()+"',"
+                    +" cli_taxa_de_entrega = '"+pModelCliente.getTxe()+"'"
                     +" WHERE cli_id = '"+pModelCliente.getCod()+"'");
         }catch(Exception e){
             System.err.println(e);
@@ -159,6 +158,7 @@ public class DAOCliente extends ConexaoMySql{
                 modelCliente.setCidade(this.getResultSet().getString("cli_cidade"));
                 modelCliente.setCep(this.getResultSet().getString("cli_cep"));
                 modelCliente.setTxe(this.getResultSet().getBigDecimal("cli_taxa_de_entrega"));
+                modelCliente.setNumero(this.getResultSet().getString("cli_numero"));
                 
             }
             
@@ -170,5 +170,111 @@ public class DAOCliente extends ConexaoMySql{
         return  modelCliente;
         
     }
+
+    public ArrayList<ModelCliente> getListaClienteController() {
+        ModelCliente modelCliente = new ModelCliente();
+        ArrayList<ModelCliente> listaModelCliente = new ArrayList<>();
+
+        try {
+            this.conectar();
+            this.executarSQL("SELECT cli_telefone, cli_nome  FROM tbl_cliente");
+
+            while (this.getResultSet().next()) {
+                modelCliente = new ModelCliente();
+                modelCliente.setTelefone(this.getResultSet().getString("cli_telefone"));
+                modelCliente.setNome(this.getResultSet().getString("cli_nome"));
+                listaModelCliente.add(modelCliente);
+            }
+
+        } catch (Exception e) {
+            System.err.println(e);
+        } finally {
+            this.fecharConexao();
+        }
+        return listaModelCliente;
+
+    }
+
+    public ModelCliente getClienteTelefoneDAO(String pTelefone) {
+        ModelCliente modelCliente = new ModelCliente();
+        
+        
+        try{
+            this.conectar();
+            this.executarSQL("SELECT cli_id, cli_telefone, cli_nome, cli_cpf_cnpj, "
+                    + "cli_email, cli_observacao, cli_endereco, cli_numero, "
+                    + "cli_complemento, cli_bairro, cli_cidade, cli_cep, "
+                    + "cli_taxa_de_entrega FROM tbl_cliente WHERE cli_telefone = '"
+                    +pTelefone+"'");
+            
+            while(this.getResultSet().next()){
+                modelCliente = new ModelCliente();
+                modelCliente.setCod(this.getResultSet().getInt("cli_id"));
+                modelCliente.setTelefone(this.getResultSet().getString("cli_telefone"));
+                modelCliente.setNome(this.getResultSet().getString("cli_nome"));
+                modelCliente.setCpfCnpj(this.getResultSet().getString("cli_cpf_cnpj"));
+                modelCliente.setEmail(this.getResultSet().getString("cli_email"));
+                modelCliente.setObs(this.getResultSet().getString("cli_observacao"));
+                modelCliente.setEndereco(this.getResultSet().getString("cli_endereco"));
+                modelCliente.setComplemento(this.getResultSet().getString("cli_complemento"));
+                modelCliente.setBairro(this.getResultSet().getString("cli_bairro"));
+                modelCliente.setCidade(this.getResultSet().getString("cli_cidade"));
+                modelCliente.setCep(this.getResultSet().getString("cli_cep"));
+                modelCliente.setTxe(this.getResultSet().getBigDecimal("cli_taxa_de_entrega"));
+                modelCliente.setNumero(this.getResultSet().getString("cli_numero"));
+                
+            }
+            
+        }catch(Exception e){
+            System.err.println(e);
+        }finally{
+            this.fecharConexao();
+        }
+        return  modelCliente;
+        
     
+        
+       
+    }
+
+    public ModelCliente getClienteNomeDAO(String pNome) {
+        ModelCliente modelCliente = new ModelCliente();
+        
+        
+        try{
+            this.conectar();
+            this.executarSQL("SELECT cli_id, cli_telefone, cli_nome, cli_cpf_cnpj, "
+                    + "cli_email, cli_observacao, cli_endereco, cli_numero, "
+                    + "cli_complemento, cli_bairro, cli_cidade, cli_cep, "
+                    + "cli_taxa_de_entrega FROM tbl_cliente WHERE cli_nome = '"
+                    +pNome+"'");
+            
+            while(this.getResultSet().next()){
+                modelCliente = new ModelCliente();
+                modelCliente.setCod(this.getResultSet().getInt("cli_id"));
+                modelCliente.setTelefone(this.getResultSet().getString("cli_telefone"));
+                modelCliente.setNome(this.getResultSet().getString("cli_nome"));
+                modelCliente.setCpfCnpj(this.getResultSet().getString("cli_cpf_cnpj"));
+                modelCliente.setEmail(this.getResultSet().getString("cli_email"));
+                modelCliente.setObs(this.getResultSet().getString("cli_observacao"));
+                modelCliente.setEndereco(this.getResultSet().getString("cli_endereco"));
+                modelCliente.setComplemento(this.getResultSet().getString("cli_complemento"));
+                modelCliente.setBairro(this.getResultSet().getString("cli_bairro"));
+                modelCliente.setCidade(this.getResultSet().getString("cli_cidade"));
+                modelCliente.setCep(this.getResultSet().getString("cli_cep"));
+                modelCliente.setTxe(this.getResultSet().getBigDecimal("cli_taxa_de_entrega"));
+                modelCliente.setNumero(this.getResultSet().getString("cli_numero"));
+                
+            }
+            
+        }catch(Exception e){
+            System.err.println(e);
+        }finally{
+            this.fecharConexao();
+        }
+        return  modelCliente;
+        
+    }
+        
 }
+    
